@@ -124,9 +124,26 @@ def format_track_info(track):
     )
 
 
-if __name__ == "__main__":
-    args = parse_arguments()
-    sp = spotipy.Spotify()
+def init_credentials_manager():
+	client_id = os.getenv('SPOTIPY_CLIENT_ID')
+	client_secret = os.getenv('SPOTIPY_CLIENT_SECRET')
+	redirect_uri = os.getenv('SPOTIPY_REDIRECT_URI')
+
+	if not client_id or not client_secret or not redirect_uri:
+		return None
+	else:
+		return spotipy.oauth2.SpotifyClientCredentials(client_id=client_id, client_secret=client_secret)
+
+
+def main():
+	args = parse_arguments()
+
+    credentials_manager = init_credentials_manager()
+    if credentials_manager is None:
+    	print colored('The necessary environment variables are not set. Please read README.MD more carefully', 'red')
+    	return 1
+
+    sp = spotipy.Spotify(client_credentials_manager=credentials_manager)
 
     logger = logging.getLogger(__name__)
     if args.debug:
@@ -155,7 +172,7 @@ if __name__ == "__main__":
 
     if len(spotify_tracks) < 1:
         print '\nNo tracks matched on Spotify'
-        sys.exit(0)
+        return 1
 
     print '\n%s/%s of tracks matched on Spotify, creating playlist "%s" on Spotify...' % (len(spotify_tracks), len(tracks), spotify_playlist_name),
 
@@ -179,3 +196,8 @@ if __name__ == "__main__":
             print 'done\n'
     else:
         logger.critical('Can\'t get token for %s user' % spotify_username)
+
+
+if __name__ == "__main__":
+	main()
+    
