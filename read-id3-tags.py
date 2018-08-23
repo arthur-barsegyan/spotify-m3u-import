@@ -20,6 +20,7 @@ def parse_arguments():
     p.add_argument('-d', '--debug', help='Debug mode', action='store_true', default=False)
     return p.parse_args()
 
+
 def load_playlist_file(playlist_file):
     tracks = []
     try:
@@ -31,6 +32,7 @@ def load_playlist_file(playlist_file):
         for track in content:
             tracks.append({'path': track})
         return tracks
+
 
 def read_id3_tags(file_name):
     tag_data = False
@@ -45,6 +47,7 @@ def read_id3_tags(file_name):
                 tag_data = {'artist': track_id3.tag.artist, 'title': track_id3.tag.title}
     return tag_data
 
+
 def guess_missing_track_info(file_name):
     guess = False
     filename = os.path.basename(file_name)
@@ -55,6 +58,7 @@ def guess_missing_track_info(file_name):
         guess['artist'] = track_uri_parts[0].strip()
         guess['title'] = track_uri_parts[1].strip()
     return guess
+
 
 def find_spotify_track(track):
     def _select_result_from_spotify_search(search_string, track_name, spotify_match_threshold):
@@ -97,6 +101,7 @@ def find_spotify_track(track):
             return seach_result
     return False
 
+
 def format_track_info(track):
     if track['id3_data']:
         formatted_id3_data = '%s - %s' % (repr(track['id3_data']['artist']), repr(track['id3_data']['title']))
@@ -117,6 +122,7 @@ def format_track_info(track):
         formatted_guess,
         formatted_spotify
     )
+
 
 if __name__ == "__main__":
     args = parse_arguments()
