@@ -37,20 +37,23 @@ def load_playlist_file(playlist_file):
     def parse_xml():
     	# 'readPlist' is deprecated but new method available only in Python 3
         playlist = plistlib.readPlist(playlist_file)
-        for track_id, track_meta in playlist['Tracks']:
-            tracks.append({'path': track_meta['Artist'] + ' - ' + track_meta['Name']})
+        for track_meta in playlist['Tracks'].values():
+            artist = track_meta['Artist'] if 'Artist' in track_meta else ''
+            name = track_meta['Name'] if 'Name' in track_meta else ''
+            tracks.append({'path': artist + ' - ' + name})
 
     path_with_name, file_ext = os.path.splitext(playlist_file.name)
     try:
-        if file_ext is '.m3u':
+        if file_ext == '.m3u':
             parse_m3u()
-        elif file_ext is '.xml':
+        elif file_ext == '.xml':
             parse_xml()
         else:
             print colored('Playlist file failed load: Unsupported file extension "%s"', 'red')
             sys.exit(1)
     except Exception as e:
         logger.critical('Playlist file "%s" failed load: %s' % (playlist_file, str(e)))
+        logger.critical('Playlist file "%s" failed load: %s' % (playlist_file.name, str(e)))
         sys.exit(1)
     else:
         return tracks
