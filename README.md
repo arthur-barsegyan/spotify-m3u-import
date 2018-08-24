@@ -1,6 +1,6 @@
 # spotify-m3u-import
 
-A small python script to create a Spotify playlist from a m3u playlist file.
+A small python script to create a Spotify playlist from a m3u playlist file or iTunes XML file.
 
 It will:
 
@@ -22,7 +22,7 @@ Take 5 mins to register an app to get access to the Spotify API:
 
 https://developer.spotify.com/my-applications/#!/
 
-The Redirect URI doesn't need to be valid, it can be a non-existant domain.
+The Redirect URI doesn't need to be valid, it can be a non-existant domain. (Usually it's "http://localhost")
 
 Export Spotify related environment variables from your new app:
 
@@ -66,4 +66,15 @@ Guess from filename: dave spoon - at night (shadow child & t. williams re
 Spotify: Dave Spoon - At Night - Shadow Child & T. Williams Re-vibe, 1JEA273o693GwuI39gayHk
 
 3/3 of tracks matched on Spotify, creating playlist "my_playlist.m3u" on Spotify... done
+```
+
+## Problems
+
+If you have Python ImportError exception with message: "raise ImportError('failed to find libmagic.  Check your installation')" read next. libmagic library may requires additional dependencies on your environment.
+
+For Mac users it can be resolved like (thx https://gist.github.com/eparreno/1845561):
+```
+brew install libmagic
+brew link libmagic
+sudo env ARCHFLAGS="-arch x86_64" gem install ruby-filemagic -- --with-magic-include=/usr/local/include --with-magic-lib=/usr/local/lib/
 ```
