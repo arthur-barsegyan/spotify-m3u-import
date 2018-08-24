@@ -1,4 +1,4 @@
-# spotify-playlist-import.py
+# Spotify Playlist Import
 
 A small python script to create a Spotify playlist from a m3u playlist file or iTunes XML file.
 
