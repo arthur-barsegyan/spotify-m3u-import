@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 
 
 def parse_arguments():
-    p = argparse.ArgumentParser(description='A script to import a m3u playlist into Spotify')
+    p = argparse.ArgumentParser(description='A script for migrate your library from Apple Music or import a m3u playlist into Spotify')
     p.add_argument('-f', '--file', help='Path to M3U playlist file or iTunes XML file', type=argparse.FileType('r'),
                    required=True)
     p.add_argument('-u', '--username', help='Spotify username', required=True)

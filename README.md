@@ -1,4 +1,4 @@
-# spotify-m3u-import
+# spotify-playlist-import.py
 
 A small python script to create a Spotify playlist from a m3u playlist file or iTunes XML file.
 
@@ -32,11 +32,25 @@ export SPOTIPY_CLIENT_SECRET='your-spotify-client-secret'
 export SPOTIPY_REDIRECT_URI='your-app-redirect-url'
 ```
 
+
+## Migration from Apple Music into Spotify
+
+In order to export your entire library from Apple Music, you must:
+
+1. Open iTunes
+2. Select "File" menu and select "Library" -> "Export library"
+3. Save this XML file in any folder
+4. Start this script and specify the path to this file like:
+
+```
+$ ./spotify-playlist-import.py -f <path_to_your_xml_library> -u <spotify_username>
+``` 
+
 ## Example
 
 ```
-$ ./read-id3-tags.py --help
-usage: read-id3-tags.py [-h] -f FILE -u USERNAME [-d]
+$ ./spotify-playlist-import.py --help
+usage: spotify-playlist-import.py [-h] -f FILE -u USERNAME [-d]
 
 A script to import a m3u playlist into Spotify
 
@@ -47,7 +61,7 @@ optional arguments:
                         Spotify username
   -d, --debug           Debug mode
 $ 
-$ ./read-id3-tags.py -f my_playlist.m3u -u my_username
+$ ./spotify-playlist-import.py -f my_playlist.m3u -u my_username
 Parsed 3 tracks from my_playlist.m3u
 
 tracks/inspectah deck - the movement - 12 - vendetta.mp3
